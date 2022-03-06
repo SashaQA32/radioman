@@ -5,11 +5,15 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
+    private int minStation = 0;
+    private int maxStation = 11;
+    private int minVolume = 0;
+    private int maxVolume = 100;
 
     @Test
     void setCurrentStation() {
-        Radio station = new Radio();
-        int expected = 7;
+        Radio station = new Radio(8, 63, minStation, maxStation, minVolume, maxVolume);
+        int expected = 3;
 
         station.setCurrentStation(expected);
 
@@ -18,8 +22,8 @@ class RadioTest {
 
     @Test
     void incorrectMinValueSetCurrentStation() {
-        Radio station = new Radio();
-        int expected = station.getCurrentStation();
+        int expected = 3;
+        Radio station = new Radio(expected, 63);
 
         station.setCurrentStation(-1);
 
@@ -28,18 +32,17 @@ class RadioTest {
 
     @Test
     void incorrectMaxValueSetCurrentStation() {
-        Radio station = new Radio();
-        int expected = station.getCurrentStation();
+        int expected = 3;
+        Radio station = new Radio(expected, 63);
 
-        station.setCurrentStation(10);
+        station.setCurrentStation(12);
 
         assertEquals(expected, station.getCurrentStation());
     }
 
     @Test
     void pushNextRadioStation() {
-        Radio station = new Radio();
-        station.setCurrentStation(9);
+        Radio station = new Radio(11, 63, minStation, maxStation, minVolume, maxVolume);
         station.nextStation();
 
         int expected = 0;
@@ -49,35 +52,9 @@ class RadioTest {
 
     @Test
     void pushDoubleNextRadioStation() {
-        Radio station = new Radio();
-        station.setCurrentStation(9);
+        Radio station = new Radio(10, 63, minStation, maxStation, minVolume, maxVolume);
         station.nextStation();
         station.nextStation();
-
-        int expected = 1;
-
-        assertEquals(expected, station.getCurrentStation());
-    }
-
-    @Test
-    void pushPrevRadioStation() {
-        Radio station = new Radio();
-        station.setCurrentStation(0);
-        station.prevStation();
-
-
-        int expected = 9;
-
-        assertEquals(expected, station.getCurrentStation());
-    }
-
-    @Test
-    void pushDoublePrevRadioStation() {
-        Radio station = new Radio();
-        station.setCurrentStation(2);
-        station.prevStation();
-        station.prevStation();
-
 
         int expected = 0;
 
@@ -85,9 +62,31 @@ class RadioTest {
     }
 
     @Test
+    void pushPrevRadioStation() {
+        Radio station = new Radio(0, 63, minStation, maxStation, minVolume, maxVolume);
+        station.prevStation();
+
+        int expected = 11;
+
+        assertEquals(expected, station.getCurrentStation());
+    }
+
+    @Test
+    void pushDoublePrevRadioStation() {
+        Radio station = new Radio(1, 63, minStation, maxStation, minVolume, maxVolume);
+
+        station.prevStation();
+        station.prevStation();
+
+        int expected = 11;
+
+        assertEquals(expected, station.getCurrentStation());
+    }
+
+    @Test
     void setCurrentVolume() {
-        Radio station = new Radio();
-        int expected = 8;
+        Radio station = new Radio(8, 63, minStation, maxStation, minVolume, maxVolume);
+        int expected = 63;
 
         station.setCurrentVolume(expected);
 
@@ -96,18 +95,18 @@ class RadioTest {
 
     @Test
     void incorrectMaxValueSetCurrentVolume() {
-        Radio station = new Radio();
-        int expected = station.getCurrentVolume();
+        int expected = 77;
+        Radio station = new Radio(8, expected);
 
-        station.setCurrentVolume(11);
+        station.setCurrentVolume(101);
 
         assertEquals(expected, station.getCurrentVolume());
     }
 
     @Test
     void incorrectMinValueSetCurrentVolume() {
-        Radio station = new Radio();
-        int expected = station.getCurrentVolume();
+        int expected = 77;
+        Radio station = new Radio(8, expected);
 
         station.setCurrentVolume(-1);
 
@@ -116,8 +115,7 @@ class RadioTest {
 
     @Test
     void volumeUpCurrentVolume() {
-        Radio station = new Radio();
-        station.setCurrentVolume(10);
+        Radio station = new Radio(8, 100, minStation, maxStation, minVolume, maxVolume);
 
         station.increaseCurrentVolume();
 
@@ -126,8 +124,7 @@ class RadioTest {
 
     @Test
     void volumeDoubleUpCurrentVolume() {
-        Radio station = new Radio();
-        station.setCurrentVolume(9);
+        Radio station = new Radio(8, 99, minStation, maxStation, minVolume, maxVolume);
 
         station.increaseCurrentVolume();
         station.increaseCurrentVolume();
@@ -137,8 +134,7 @@ class RadioTest {
 
     @Test
     void volumeDownCurrentVolume() {
-        Radio station = new Radio();
-        station.setCurrentVolume(0);
+        Radio station = new Radio(8, 0, minStation, maxStation, minVolume, maxVolume);
 
         station.decreaseCurrentVolume();
 
@@ -147,8 +143,7 @@ class RadioTest {
 
     @Test
     void volumeDoubleDownCurrentVolume() {
-        Radio station = new Radio();
-        station.setCurrentVolume(1);
+        Radio station = new Radio(8, 1, minStation, maxStation, minVolume, maxVolume);
 
         station.decreaseCurrentVolume();
         station.decreaseCurrentVolume();
