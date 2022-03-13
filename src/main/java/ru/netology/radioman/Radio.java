@@ -1,19 +1,20 @@
 package ru.netology.radioman;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Data;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class Radio {
-    private int currentStation;
-    private int currentVolume;
-    private int minStation = 0;
-    private int maxStation = 10;
-    private int minVolume = 0;
-    private int maxVolume = 100;
+    public int currentStation;
+    public int currentVolume;
+
+    public int minStation = 0;
+    public int maxStation = 10;
+    public int minVolume = 0;
+    public int maxVolume = 100;
 
     public void setCurrentStation(int currentStation) {
         if (currentStation > maxStation) {
