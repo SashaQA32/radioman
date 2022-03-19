@@ -19,7 +19,7 @@ class RadioTest {
 
     @Test
     void shouldGetCurrentStationMax() {
-        int expected = 50;
+        int expected = 49;
         int actual = radioChangeMaxStation.getMaxStation();
 
         assertEquals(expected, actual);
@@ -74,7 +74,7 @@ class RadioTest {
     void shouldSetNextNumberStationMaxChange() {
         int expected = radioChangeMaxStation.getMaxStation();
 
-        radioChangeMaxStation.setNumberCurrentStation(51);
+        radioChangeMaxStation.setNumberCurrentStation(50);
 
         int actual = radioChangeMaxStation.getMaxStation();
 
@@ -93,10 +93,10 @@ class RadioTest {
 
     @Test
     void shouldSetPrevStationMin() {
-        int expected = radio.getMaxStation();
+        int expected = radio.getMaxStation() - 1;
         radio.setCurrentStation(0);
         radio.prevStation();
-        int actual = radio.getCurrentStation();
+        int actual = radio.getCurrentStation() - 1;
         assertEquals(expected, actual);
     }
 
@@ -111,7 +111,7 @@ class RadioTest {
 
     @Test
     void shouldSetPrevStationChangeMin() {
-        int expected = 49;
+        int expected = 48;
         radioChangeMaxStation.setCurrentStation(radioChangeMaxStation.getMaxStation());
         radioChangeMaxStation.prevStation();
         int actual = radioChangeMaxStation.getCurrentStation();
@@ -120,8 +120,8 @@ class RadioTest {
 
     @Test
     void shouldSetPrevStationMinRadio() {
-        int expected = 9;
-        radio.setCurrentStation(radio.getMaxStation());
+        int expected = 8;
+        radio.setCurrentStation(radio.getMaxStation() - 1);
         radio.prevStation();
         int actual = radio.getCurrentStation();
         assertEquals(expected, actual);
